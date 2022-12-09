@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">CHI_12_DI</string>
+    <string name="app_name">Photos</string>
+    <string name="get_new_photo">get new photo</string>
+    <string name="photo">photo</string>
 </resources>
