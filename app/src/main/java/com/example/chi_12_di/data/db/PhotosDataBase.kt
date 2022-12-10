@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.chi_12_di.data.db.dao.PhotosDao
+import com.example.chi_12_di.data.db.dao.IPhotosDao
 import com.example.chi_12_di.data.db.model.PhotoEntity
 import kotlinx.coroutines.CoroutineScope
 
@@ -14,9 +14,9 @@ import kotlinx.coroutines.CoroutineScope
         PhotoEntity::class
     ]
 )
-abstract class PhotosDataBase : RoomDatabase() {
+abstract class PhotosDataBase : RoomDatabase() { // needs context
 
-    abstract val photosDao: PhotosDao
+    abstract val IPhotosDao: IPhotosDao
 
     companion object {
         private const val DB_NAME = "photosDataBase"

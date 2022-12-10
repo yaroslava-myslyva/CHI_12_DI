@@ -3,8 +3,9 @@ package com.example.chi_12_di.di
 import android.content.Context
 import com.example.chi_12_di.app.PhotosApplication.Companion.applicationScope
 import com.example.chi_12_di.data.db.PhotosDataBase
-import com.example.chi_12_di.data.network.api.RetrofitService
+import com.example.chi_12_di.data.network.api.IRetrofitService
 import com.example.chi_12_di.data.repository.PhotosRepositoryImpl
+import com.example.chi_12_di.domain.usecase.impl.DeleteAllPhotosUseCaseImpl
 import com.example.chi_12_di.domain.usecase.impl.GetOnePhotoUseCaseImpl
 import com.example.chi_12_di.presentation.ViewModelFactory
 import com.google.gson.Gson
@@ -20,7 +21,7 @@ object Injection {
     fun initInjection(context: Context){
         dataBase = PhotosDataBase.getDataBase(context, applicationScope)
     }
-    private fun provideRetrofitService(): RetrofitService {
+    private fun provideRetrofitService(): IRetrofitService {
         val okHttpClient = OkHttpClient().newBuilder().addInterceptor { chain ->
             val newRequest = chain.request().newBuilder()
                 .addHeader("Authorization", API_KEY)
@@ -32,15 +33,17 @@ object Injection {
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create(Gson()))
             .build()
-            .create(RetrofitService::class.java)
+            .create(IRetrofitService::class.java)
     }
 
-    private fun providePhotosDao() = dataBase.photosDao
+    private fun providePhotosDao() = dataBase.IPhotosDao
 
     private fun providePhotosRepository() =
         PhotosRepositoryImpl.getInstance(provideRetrofitService(), providePhotosDao())
 
     fun provideGetOnePhotoUseCase() = GetOnePhotoUseCaseImpl(providePhotosRepository())
+
+    fun provideDeleteAllPhotosUseCase() = DeleteAllPhotosUseCaseImpl(providePhotosRepository())
 
     fun provideModelFactory() = ViewModelFactory.getInstance()
 

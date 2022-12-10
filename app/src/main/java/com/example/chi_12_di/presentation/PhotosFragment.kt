@@ -46,6 +46,11 @@ class PhotosFragment : Fragment() {
                 }
             }
         }
+        binding.buttonClearAll.setOnClickListener {
+            applicationScope.launch(Dispatchers.IO) {
+                viewModel.deleteAllPhotos()
+            }
+        }
     }
 
     private fun setupRecyclerview(list: List<PhotoEntity>) {

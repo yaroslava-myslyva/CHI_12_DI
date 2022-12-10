@@ -9,7 +9,7 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.chi_12_di.data.db.model.PhotoEntity
 import com.example.chi_12_di.databinding.ItemPhotoBinding
 
-class PhotosAdapter : RecyclerView.Adapter<PhotosAdapter.PhotoViewHolder>() {
+class PhotosAdapter : RecyclerView.Adapter<PhotosAdapter.PhotoViewHolder>() { // needs context
     private lateinit var photos: List<PhotoEntity>
 
     fun setList(list: List<PhotoEntity>) {

@@ -2,26 +2,26 @@ package com.example.chi_12_di.data.repository
 
 import android.util.Log
 import com.example.chi_12_di.MainActivity.Companion.TAG
-import com.example.chi_12_di.data.db.dao.PhotosDao
+import com.example.chi_12_di.data.db.dao.IPhotosDao
 import com.example.chi_12_di.data.db.model.PhotoEntity
-import com.example.chi_12_di.data.network.api.RetrofitService
+import com.example.chi_12_di.data.network.api.IRetrofitService
 import com.example.chi_12_di.data.network.model.response.WholeResponseModel
-import com.example.chi_12_di.domain.repository.PhotosRepository
+import com.example.chi_12_di.domain.repository.IPhotosRepository
 import kotlinx.coroutines.flow.Flow
 
 class PhotosRepositoryImpl(
-    private val retrofitService: RetrofitService,
-    private val dao: PhotosDao
-) : PhotosRepository {
+    private val IRetrofitService: IRetrofitService,
+    private val dao: IPhotosDao
+) : IPhotosRepository {
 
     companion object {
         private var instance: PhotosRepositoryImpl? = null
         fun getInstance(
-            retrofitService: RetrofitService,
-            dao: PhotosDao
+            IRetrofitService: IRetrofitService,
+            dao: IPhotosDao
         ): PhotosRepositoryImpl {
             if (instance == null) {
-                instance = PhotosRepositoryImpl(retrofitService, dao)
+                instance = PhotosRepositoryImpl(IRetrofitService, dao)
             }
             return instance as PhotosRepositoryImpl
         }
@@ -30,7 +30,7 @@ class PhotosRepositoryImpl(
     override suspend fun addPhoto() {
         kotlin.runCatching {
             val photoResponse =
-                retrofitService.getResponseItem(
+                IRetrofitService.getResponseItem(
                     listOf(('0'..'9'), ('a'..'z'), ('A'..'Z')).flatten().random().toString(), 1
                 ).execute()
             val wholeResponseModelBody = photoResponse.body() as WholeResponseModel
@@ -47,4 +47,5 @@ class PhotosRepositoryImpl(
     }
 
     override fun fetchAllPhotos(): Flow<List<PhotoEntity>> = dao.fetchPhotos()
+    override fun deleteAllPhotos() = dao.deleteAllPhotos()
 }
