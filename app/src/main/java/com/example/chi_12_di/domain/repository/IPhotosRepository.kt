@@ -1,8 +1,8 @@
 package com.example.chi_12_di.domain.repository
 
-import androidx.room.Query
 import com.example.chi_12_di.data.db.model.PhotoEntity
 import kotlinx.coroutines.flow.Flow
+
 
 interface IPhotosRepository {
 

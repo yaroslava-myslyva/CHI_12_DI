@@ -7,13 +7,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class GetOnePhotoUseCaseImpl(private val repository: IPhotosRepository) : IGetOnePhotoUseCase {
+class GetOnePhotoUseCaseImpl @Inject constructor(private val repository: IPhotosRepository) : IGetOnePhotoUseCase {
+
     override fun execute(): Flow<List<PhotoEntity>> {
-
         MainScope().launch(Dispatchers.IO) {
             repository.addPhoto()
-
         }
         return repository.fetchAllPhotos()
     }

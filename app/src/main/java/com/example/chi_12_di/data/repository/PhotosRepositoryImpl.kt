@@ -6,22 +6,24 @@ import com.example.chi_12_di.data.db.dao.IPhotosDao
 import com.example.chi_12_di.data.db.model.PhotoEntity
 import com.example.chi_12_di.data.network.api.IRetrofitService
 import com.example.chi_12_di.data.network.model.response.WholeResponseModel
+import com.example.chi_12_di.di.Injection
 import com.example.chi_12_di.domain.repository.IPhotosRepository
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class PhotosRepositoryImpl(
-    private val IRetrofitService: IRetrofitService,
-    private val dao: IPhotosDao
-) : IPhotosRepository {
+class PhotosRepositoryImpl @Inject constructor(
+    private val IRetrofitService: IRetrofitService
+    ) : IPhotosRepository {
+
+    private val dao: IPhotosDao = Injection.providePhotosDao()
 
     companion object {
         private var instance: PhotosRepositoryImpl? = null
         fun getInstance(
-            IRetrofitService: IRetrofitService,
-            dao: IPhotosDao
+            IRetrofitService: IRetrofitService
         ): PhotosRepositoryImpl {
             if (instance == null) {
-                instance = PhotosRepositoryImpl(IRetrofitService, dao)
+                instance = PhotosRepositoryImpl(IRetrofitService)
             }
             return instance as PhotosRepositoryImpl
         }
@@ -47,5 +49,6 @@ class PhotosRepositoryImpl(
     }
 
     override fun fetchAllPhotos(): Flow<List<PhotoEntity>> = dao.fetchPhotos()
+
     override fun deleteAllPhotos() = dao.deleteAllPhotos()
 }
