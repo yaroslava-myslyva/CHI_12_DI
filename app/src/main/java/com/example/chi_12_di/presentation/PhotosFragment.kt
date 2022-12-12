@@ -18,20 +18,22 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
 class PhotosFragment : Fragment() {
     private lateinit var binding: FragmentPhotosBinding
     private lateinit var component: AppComponent
-    private val viewModel: PhotosViewModel by viewModels {
-        component.viewModelsFactory()
-    }
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+
+    private val viewModel: PhotosViewModel by viewModels { viewModelFactory }
 
     companion object {
         fun newInstance() = PhotosFragment()
     }
 
     override fun onAttach(context: Context) {
-
         component = DaggerAppComponent.builder().build()
         component.inject(this)
         super.onAttach(context)

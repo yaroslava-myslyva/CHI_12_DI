@@ -1,5 +1,6 @@
 package com.example.chi_12_di.di
 
+import com.example.chi_12_di.BuildConfig
 import com.example.chi_12_di.data.network.api.IRetrofitService
 import com.google.gson.Gson
 import dagger.Module
@@ -10,8 +11,9 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 @Module
 class RetrofitServiceImplModule {
-    private val BASE_URL = "https://api.pexels.com/v1/"
-    private val API_KEY = "563492ad6f917000010000013a82c5e17bd7414699872efae15a20a8"
+    private val BASE_URL = BuildConfig.BASE_URL
+    private val API_KEY = BuildConfig.API_KEY
+
     @Provides
     fun provideRetrofitService(): IRetrofitService {
         val okHttpClient = OkHttpClient().newBuilder().addInterceptor { chain ->
