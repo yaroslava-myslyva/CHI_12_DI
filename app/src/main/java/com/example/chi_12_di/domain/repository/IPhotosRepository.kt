@@ -1,6 +1,7 @@
 package com.example.chi_12_di.domain.repository
 
 import com.example.chi_12_di.data.db.model.PhotoEntity
+import com.example.chi_12_di.domain.entities.Photo
 import kotlinx.coroutines.flow.Flow
 
 
@@ -14,7 +15,7 @@ interface IPhotosRepository {
     /**
      *  Method for getting all photos from the database.
      */
-    fun fetchAllPhotos(): Flow<List<PhotoEntity>>
+    fun fetchAllPhotos(): Flow<List<Photo>>
 
     /**
      * Method for deletion all photos from the database.

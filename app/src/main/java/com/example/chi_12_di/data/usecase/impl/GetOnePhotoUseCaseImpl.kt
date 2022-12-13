@@ -1,6 +1,7 @@
-package com.example.chi_12_di.domain.usecase.impl
+package com.example.chi_12_di.data.usecase.impl
 
 import com.example.chi_12_di.data.db.model.PhotoEntity
+import com.example.chi_12_di.domain.entities.Photo
 import com.example.chi_12_di.domain.repository.IPhotosRepository
 import com.example.chi_12_di.domain.usecase.api.IGetOnePhotoUseCase
 import kotlinx.coroutines.Dispatchers
@@ -11,10 +12,10 @@ import javax.inject.Inject
 
 class GetOnePhotoUseCaseImpl @Inject constructor(private val repository: IPhotosRepository) : IGetOnePhotoUseCase {
 
-    override fun execute(): Flow<List<PhotoEntity>> {
-        MainScope().launch(Dispatchers.IO) {
+    override suspend fun execute(): Flow<List<Photo>> {
+
             repository.addPhoto()
-        }
+
         return repository.fetchAllPhotos()
     }
 }

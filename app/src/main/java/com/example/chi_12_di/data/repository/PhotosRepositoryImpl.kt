@@ -7,13 +7,14 @@ import com.example.chi_12_di.data.db.model.PhotoEntity
 import com.example.chi_12_di.data.network.api.IRetrofitService
 import com.example.chi_12_di.data.network.model.response.WholeResponseModel
 import com.example.chi_12_di.di.Injection
+import com.example.chi_12_di.domain.entities.Photo
 import com.example.chi_12_di.domain.repository.IPhotosRepository
-import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 class PhotosRepositoryImpl @Inject constructor(
     private val IRetrofitService: IRetrofitService
-    ) : IPhotosRepository {
+) : IPhotosRepository {
 
     private val dao: IPhotosDao = Injection.providePhotosDao()
 
@@ -37,18 +38,19 @@ class PhotosRepositoryImpl @Inject constructor(
                 ).execute()
             val wholeResponseModelBody = photoResponse.body() as WholeResponseModel
 
-            wholeResponseModelBody.photos?.forEach { photoResponseModel ->
-                photoResponseModel.mapToPhotoEntity().let { photoEntity ->
-                    dao.addPhoto(photoEntity)
+            wholeResponseModelBody.photos?.first().let { photoResponseModel ->
+                photoResponseModel?.mapToPhotoEntity()?.let { photoEntity ->
+                        dao.addPhoto(photoEntity)
                 }
-
             }
         }.onFailure {
             Log.d(TAG, "error - ${it.message}")
         }
     }
 
-    override fun fetchAllPhotos(): Flow<List<PhotoEntity>> = dao.fetchPhotos()
+    override fun fetchAllPhotos(): Flow<List<Photo>> = dao.fetchPhotos().map { list ->
+        list.map { it.mapToPhoto() }.toList()
+    }
 
     override fun deleteAllPhotos() = dao.deleteAllPhotos()
 }

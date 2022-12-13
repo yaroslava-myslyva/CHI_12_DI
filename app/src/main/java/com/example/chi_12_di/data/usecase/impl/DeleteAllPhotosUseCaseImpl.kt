@@ -1,4 +1,4 @@
-package com.example.chi_12_di.domain.usecase.impl
+package com.example.chi_12_di.data.usecase.impl
 
 import com.example.chi_12_di.domain.repository.IPhotosRepository
 import com.example.chi_12_di.domain.usecase.api.IDeleteAllPhotosUseCase

@@ -14,6 +14,7 @@ import com.example.chi_12_di.data.db.model.PhotoEntity
 import com.example.chi_12_di.databinding.FragmentPhotosBinding
 import com.example.chi_12_di.di.AppComponent
 import com.example.chi_12_di.di.DaggerAppComponent
+import com.example.chi_12_di.domain.entities.Photo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -49,35 +50,34 @@ class PhotosFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        binding.buttonGetPhoto.setOnClickListener {
-            applicationScope.launch(Dispatchers.IO) {
-                viewModel.getNewPhoto().collectLatest { list ->
-                    withContext(Dispatchers.Main) {
-                        setupRecyclerview(list)
+        with(binding) {
+            buttonGetPhoto.setOnClickListener {
+                applicationScope.launch(Dispatchers.IO) {
+                    viewModel.getNewPhoto().collectLatest { list ->
+                        withContext(Dispatchers.Main) {
+                            val adapter = PhotosAdapter()
+                            adapter.setList(list)
+                            photosList.adapter = adapter
+                            photosList.run {
+                                layoutManager = LinearLayoutManager(context)
+                                addItemDecoration(
+                                    DividerItemDecoration(
+                                        context,
+                                        LinearLayoutManager(context).orientation
+                                    )
+                                )
+                            }
+                        }
                     }
                 }
             }
-        }
-        binding.buttonClearAll.setOnClickListener {
-            applicationScope.launch(Dispatchers.IO) {
-                viewModel.deleteAllPhotos()
+            buttonClearAll.setOnClickListener {
+                applicationScope.launch(Dispatchers.IO) {
+                    viewModel.deleteAllPhotos()
+                }
             }
         }
-    }
 
-    private fun setupRecyclerview(list: List<PhotoEntity>) {
-        val adapter = PhotosAdapter()
-        adapter.setList(list)
-        binding.photosList.adapter = adapter
-        binding.photosList.run {
-            layoutManager = LinearLayoutManager(context)
-            addItemDecoration(
-                DividerItemDecoration(
-                    context,
-                    LinearLayoutManager(context).orientation
-                )
-            )
-        }
-    }
 
+    }
 }
