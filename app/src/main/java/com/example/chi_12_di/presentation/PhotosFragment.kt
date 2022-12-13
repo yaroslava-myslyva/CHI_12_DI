@@ -10,11 +10,9 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.chi_12_di.app.PhotosApplication.Companion.applicationScope
-import com.example.chi_12_di.data.db.model.PhotoEntity
 import com.example.chi_12_di.databinding.FragmentPhotosBinding
 import com.example.chi_12_di.di.AppComponent
 import com.example.chi_12_di.di.DaggerAppComponent
-import com.example.chi_12_di.domain.entities.Photo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch

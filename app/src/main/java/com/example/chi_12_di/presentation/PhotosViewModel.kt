@@ -1,7 +1,6 @@
 package com.example.chi_12_di.presentation
 
 import androidx.lifecycle.ViewModel
-import com.example.chi_12_di.data.db.model.PhotoEntity
 import com.example.chi_12_di.domain.entities.Photo
 import com.example.chi_12_di.domain.usecase.api.IDeleteAllPhotosUseCase
 import com.example.chi_12_di.domain.usecase.api.IGetOnePhotoUseCase

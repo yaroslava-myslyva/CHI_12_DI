@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.example.chi_12_di.data.db.model.PhotoEntity
 import com.example.chi_12_di.databinding.ItemPhotoBinding
 import com.example.chi_12_di.domain.entities.Photo
 

@@ -3,7 +3,6 @@ package com.example.chi_12_di.data.repository
 import android.util.Log
 import com.example.chi_12_di.MainActivity.Companion.TAG
 import com.example.chi_12_di.data.db.dao.IPhotosDao
-import com.example.chi_12_di.data.db.model.PhotoEntity
 import com.example.chi_12_di.data.network.api.IRetrofitService
 import com.example.chi_12_di.data.network.model.response.WholeResponseModel
 import com.example.chi_12_di.di.Injection
